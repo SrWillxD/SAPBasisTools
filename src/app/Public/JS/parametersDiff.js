@@ -1,17 +1,18 @@
+function addingPasteReplicationBehaviorToInputTables(){
 document.addEventListener('DOMContentLoaded', function(){
     let tables = document.querySelectorAll("table");
 
     tables.forEach(table =>{
-        table.addEventListener("paste", e =>{
-            e.preventDefault();
+        table.addEventListener("paste", clipboardEvent =>{
+            clipboardEvent.preventDefault();
 
-            let clipboardData = e.clipboardData || window.Clipboard;
-            console.log(e.clipboardData);
+            let clipboardData = clipboardEvent.clipboardData || window.Clipboard;
+            
             let pastedData = clipboardData.getData('text/plain');
 
             let rows = pastedData.split('\n');
 
-            let currentCell = e.target;
+            let currentCell = clipboardEvent.target;
             let currentRow = currentCell.parentNode;
 
             for(let i = 0; i < rows.length; i++){
@@ -24,8 +25,10 @@ document.addEventListener('DOMContentLoaded', function(){
                 }
 
                 currentRow = currentRow.nextElementSibling;
-                if(!currentRow){break};
+                if(!currentRow){break;}
             }
         });
     });
 });
+}
+addingPasteReplicationBehaviorToInputTables();
