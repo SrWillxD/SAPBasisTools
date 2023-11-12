@@ -1,34 +1,35 @@
 function addingPasteReplicationBehaviorToInputTables(){
-document.addEventListener('DOMContentLoaded', function(){
-    let tables = document.querySelectorAll("table");
+    document.addEventListener('DOMContentLoaded', function(){
+        let tables = document.querySelectorAll("table");
 
-    tables.forEach(table =>{
-        table.addEventListener("paste", clipboardEvent =>{
-            clipboardEvent.preventDefault();
+        tables.forEach(table =>{
+            table.addEventListener("paste", clipboardEvent =>{
+                clipboardEvent.preventDefault();
 
-            let clipboardData = clipboardEvent.clipboardData || window.Clipboard;
-            
-            let pastedData = clipboardData.getData('text/plain');
+                let clipboardData = clipboardEvent.clipboardData || window.Clipboard;
 
-            let rows = pastedData.split('\n');
+                let pastedData = clipboardData.getData('text/plain');
 
-            let currentCell = clipboardEvent.target;
-            let currentRow = currentCell.parentNode;
+                let rows = pastedData.split('\n');
 
-            for(let i = 0; i < rows.length; i++){
-                let cells = rows[i].split('\t');
+                let currentCell = clipboardEvent.target;
+                let currentRow = currentCell.parentNode;
 
-                for(let j = 0; j < cells.length; j++){
-                    if(currentRow.cells[j]){
-                        currentRow.cells[j].textContent = cells[j].trim();
+                for(let i = 0; i < rows.length; i++){
+                    let cells = rows[i].split('\t');
+
+                    for(let j = 0; j < cells.length; j++){
+                        if(currentRow.cells[j]){
+                            currentRow.cells[j].innerHTML = cells[j].replace(/ /g, '&nbsp;');
+                        }
                     }
-                }
 
-                currentRow = currentRow.nextElementSibling;
-                if(!currentRow){break;}
-            }
+                    currentRow = currentRow.nextElementSibling;
+                    if(!currentRow){ break; }
+                }
+            });
         });
-    });
-});
-}
+    })
+};
+
 addingPasteReplicationBehaviorToInputTables();
