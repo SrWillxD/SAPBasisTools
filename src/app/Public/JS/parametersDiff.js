@@ -34,3 +34,7 @@ function processPastedData(clipboardEvent, targetCell){
         if(!currentRow){break;}
     }
 }
+
+module.exports = {
+    addingPasteReplicationBehaviorToInputTables
+};
