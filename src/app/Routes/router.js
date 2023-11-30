@@ -1,6 +1,7 @@
 const express = require('express');
 const routes = express.Router();
+const controllerOBJ = require('../Controllers/controller.js');
 
-routes.get("/param", );
+routes.get("/", controllerOBJ.home);
 
 module.exports = routes;
