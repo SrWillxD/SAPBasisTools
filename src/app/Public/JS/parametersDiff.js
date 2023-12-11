@@ -5,6 +5,7 @@ function addingPasteReplicationBehaviorToInputTables(){
         tables.forEach(table =>{
             table.addEventListener("paste", clipboardEvent =>{
                 processPastedData(clipboardEvent, clipboardEvent.target);
+                replaceNonBreakingSpace(table);
             });
         });
     });
@@ -33,4 +34,16 @@ function processPastedData(clipboardEvent, targetCell){
         currentRow = currentRow.nextElementSibling;
         if(!currentRow){break;}
     }
+}
+
+function replaceNonBreakingSpace(table){
+    let rows = table.querySelectorAll("tbody > tr");
+
+    rows.forEach(row =>{
+        let cells = row.querySelectorAll("td");
+
+        cells.forEach(cell =>{
+            cell.innerHTML = cell.innerHTML.replace(/&nbsp;/g, ' ');
+        });
+    });
 }
