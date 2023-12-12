@@ -1,7 +1,11 @@
-#boxTables{
+#modelUser{
     background-color: darkgreen;
     display: flex;
-    
+}
+
+#userCopy{
+    background-color: crimson;
+    display: flex;
 }
 
 table{
