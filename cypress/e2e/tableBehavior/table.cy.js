@@ -35,8 +35,7 @@ Z_GEINF_ANALISTAS_FUNCIONAIS
 Z_GETEC_AUXILIAR_SF
 SAP_SUP_FI
 Z_TEMP_SE38
-Z_USERS
-`
+Z_USERS`
 
 
     it("Must fill in all the fields in the model user's 'Funções' table.", ()=>{
@@ -50,6 +49,26 @@ Z_USERS
 
         for(let i = 0; i < roleDataArray.length; i++){
             const selector = `#modelUser > :nth-child(1) > tbody > :nth-child(${i + 1}) > td`;
+            cy.get(selector).should('have.text', roleDataArray[i]);
+            console.log(roleDataArray[i]);
+        }
+    });
+
+    it("Must fill in all the fields in the model user's 'Parâmetro' table.", ()=>{
+
+    });
+
+    it("Must fill in all the fields in the model user's 'Perfis' table.", ()=>{
+        const roleDataArray = roleData.trim().split('\n');
+
+        cy.visit('http://localhost:3333/params');
+
+        cy.get('#modelUser > :nth-child(3) > tbody > :nth-child(1) > td')
+            .invoke('text', roleData)
+            .trigger('paste', { clipboardData: { getData: () => roleData } });
+
+        for(let i = 0; i < roleDataArray.length; i++){
+            const selector = `#modelUser > :nth-child(3) > tbody > :nth-child(${i + 1}) > td`;
             cy.get(selector).should('have.text', roleDataArray[i]);
             console.log(roleDataArray[i]);
         }
