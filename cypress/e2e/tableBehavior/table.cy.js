@@ -1,6 +1,6 @@
 /// <reference types="Cypress"/>
 
-describe('Paste replication behavior', ()=>{
+describe('Paste replication behavior', () => {
     const parameterData = `/STMC/USER_ID	USR_TDZLGAJ6HAPORO
 AREA_ID	S_AREA_CMG
 BCS_ADMIN_TREE	CC
@@ -37,6 +37,13 @@ SAP_SUP_FI
 Z_TEMP_SE38
 Z_USERS`
 
+    function createArrayOfArrays(data) {
+        return data.split('\n').map(row => {
+            const [left, right] = row.split('\t');
+            return [left, right];
+        });
+    }
+
 
     it("Must fill in all the fields in the model user's 'Funções' table.", ()=>{
         const roleDataArray = roleData.trim().split('\n');
@@ -50,12 +57,32 @@ Z_USERS`
         for(let i = 0; i < roleDataArray.length; i++){
             const selector = `#modelUser > :nth-child(1) > tbody > :nth-child(${i + 1}) > td`;
             cy.get(selector).should('have.text', roleDataArray[i]);
-            console.log(roleDataArray[i]);
         }
     });
 
-    it("Must fill in all the fields in the model user's 'Parâmetro' table.", ()=>{
+    it("Must fill in all the fields in the model user's 'Parâmetro' table.", () =>{
+        const parameterDataArray = createArrayOfArrays(parameterData);
 
+        cy.visit('http://localhost:3333/params');
+
+        cy.get('#modelUser > :nth-child(2) > tbody > :nth-child(1) > :nth-child(1)')
+            .invoke('text', parameterData)
+            .trigger('paste', { clipboardData: { getData: () => parameterData } });
+
+        const paramTableArray = [];
+        const paramTableSelector = '#modelUser table:nth-child(2) tbody tr';
+
+        cy.get(paramTableSelector).each(($row)=>{
+            const rowData = [];
+
+            cy.wrap($row).find('td').each(($cell) =>{
+                rowData.push($cell.text());
+            });
+
+            paramTableArray.push(rowData);
+        }).then(()=>{
+            expect(parameterDataArray).to.deep.equal(paramTableArray);
+        });
     });
 
     it("Must fill in all the fields in the model user's 'Perfis' table.", ()=>{
@@ -70,8 +97,6 @@ Z_USERS`
         for(let i = 0; i < roleDataArray.length; i++){
             const selector = `#modelUser > :nth-child(3) > tbody > :nth-child(${i + 1}) > td`;
             cy.get(selector).should('have.text', roleDataArray[i]);
-            console.log(roleDataArray[i]);
         }
     });
-
 });
