@@ -99,4 +99,59 @@ Z_USERS`
             cy.get(selector).should('have.text', roleDataArray[i]);
         }
     });
+
+    it("Must fill in all the fields in the copy user's 'Funções' table.", ()=>{
+        const roleDataArray = roleData.trim().split('\n');
+
+        cy.visit('http://localhost:3333/params');
+
+        cy.get('#userCopy > :nth-child(1) > tbody > :nth-child(1) > td')
+            .invoke('text', roleData)
+            .trigger('paste', { clipboardData: { getData: () => roleData } });
+
+        for(let i = 0; i < roleDataArray.length; i++){
+            const selector = `#userCopy > :nth-child(1) > tbody > :nth-child(${i + 1}) > td`;
+            cy.get(selector).should('have.text', roleDataArray[i]);
+        }
+    });
+
+    it("Must fill in all the fields in the model user's 'Parâmetro' table.", () =>{
+        const parameterDataArray = createArrayOfArrays(parameterData);
+
+        cy.visit('http://localhost:3333/params');
+
+        cy.get('#userCopy > :nth-child(2) > tbody > :nth-child(1) > :nth-child(1)')
+            .invoke('text', parameterData)
+            .trigger('paste', { clipboardData: { getData: () => parameterData } });
+
+        const paramTableArray = [];
+        const paramTableSelector = '#userCopy table:nth-child(2) tbody tr';
+
+        cy.get(paramTableSelector).each(($row)=>{
+            const rowData = [];
+
+            cy.wrap($row).find('td').each(($cell) =>{
+                rowData.push($cell.text());
+            });
+
+            paramTableArray.push(rowData);
+        }).then(()=>{
+            expect(parameterDataArray).to.deep.equal(paramTableArray);
+        });
+    });
+
+    it("Must fill in all the fields in the model user's 'Perfis' table.", ()=>{
+        const roleDataArray = roleData.trim().split('\n');
+
+        cy.visit('http://localhost:3333/params');
+
+        cy.get('#userCopy > :nth-child(3) > tbody > :nth-child(1) > td')
+            .invoke('text', roleData)
+            .trigger('paste', { clipboardData: { getData: () => roleData } });
+
+        for(let i = 0; i < roleDataArray.length; i++){
+            const selector = `#userCopy > :nth-child(3) > tbody > :nth-child(${i + 1}) > td`;
+            cy.get(selector).should('have.text', roleDataArray[i]);
+        }
+    });
 });
