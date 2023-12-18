@@ -1,3 +1,9 @@
+applicationLauncher();
+
+function applicationLauncher(){
+    addingPasteReplicationBehaviorToInputTables();
+}
+
 function addingPasteReplicationBehaviorToInputTables(){
     document.addEventListener('DOMContentLoaded', function(){
         let tables = document.querySelectorAll("table");
@@ -10,8 +16,6 @@ function addingPasteReplicationBehaviorToInputTables(){
         });
     });
 }
-
-addingPasteReplicationBehaviorToInputTables();
 
 function processPastedData(clipboardEvent, targetCell){
     clipboardEvent.preventDefault();
@@ -46,4 +50,15 @@ function replaceNonBreakingSpace(table){
             cell.innerHTML = cell.innerHTML.replace(/&nbsp;/g, ' ');
         });
     });
+}
+
+function capturesAllDataFromAllTables(){
+    let modelUserFunctionsArr = [];
+    let modelUserParamsArr = [];
+    let modelUserProfilesArr = [];
+    let userCopyFunctionsArr = [];
+    let userCopyParamsArr = [];
+    let userCopyProfilesArr = [];
+
+    
 }
