@@ -2,6 +2,7 @@ applicationLauncher();
 
 function applicationLauncher(){
     addingPasteReplicationBehaviorToInputTables();
+    compareButtonListener();
 }
 
 function addingPasteReplicationBehaviorToInputTables(){
@@ -52,13 +53,47 @@ function replaceNonBreakingSpace(table){
     });
 }
 
-function capturesAllDataFromAllTables(){
-    let modelUserFunctionsArr = [];
-    let modelUserParamsArr = [];
-    let modelUserProfilesArr = [];
-    let userCopyFunctionsArr = [];
-    let userCopyParamsArr = [];
-    let userCopyProfilesArr = [];
+function compareButtonListener(){
+    const button = document.getElementById('compareButtonBTN');
 
-    
+    document.addEventListener('DOMContentLoaded', ()=>{
+        button.addEventListener('click', capturesAllDataFromAllTables);
+    })
+}
+
+function capturesAllDataFromAllTables(){
+    let modelUserFunctionsArr = captureTableData("#modelUser table:nth-child(1)");
+    let modelUserParamsArr = captureTableData("#modelUser table:nth-child(2)");
+    let modelUserProfilesArr = captureTableData("#modelUser table:nth-child(3)");
+
+    let userCopyFunctionsArr = captureTableData("#userCopy table:nth-child(1)");
+    let userCopyParamsArr = captureTableData("#userCopy table:nth-child(2)");
+    let userCopyProfilesArr = captureTableData("#userCopy table:nth-child(3)");
+
+    console.log("Model User Functions:", modelUserFunctionsArr);
+    console.log("Model User Parameters:", modelUserParamsArr);
+    console.log("Model User Profiles:", modelUserProfilesArr);
+
+    console.log("User Copy Functions:", userCopyFunctionsArr);
+    console.log("User Copy Parameters:", userCopyParamsArr);
+    console.log("User Copy Profiles:", userCopyProfilesArr);
+}
+
+
+function captureTableData(selector){
+    let dataArray = [];
+    let rows = document.querySelectorAll(`${selector} tbody > tr`);
+
+    rows.forEach(row =>{
+        let cells = row.querySelectorAll("td");
+        let rowData = [];
+
+        cells.forEach(cell =>{
+            rowData.push(cell.textContent);
+        });
+
+        dataArray.push(rowData);
+    });
+
+    return dataArray;
 }
