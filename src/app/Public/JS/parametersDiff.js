@@ -89,7 +89,7 @@ function captureTableData(selector){
         let rowData = [];
 
         cells.forEach(cell =>{
-            rowData.push(cell.textContent);
+            rowData.push(cell.textContent.replace(/\n$/, ''));
         });
 
         dataArray.push(rowData);
