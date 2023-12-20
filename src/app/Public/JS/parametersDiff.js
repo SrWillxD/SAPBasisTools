@@ -70,13 +70,7 @@ function capturesAllDataFromAllTables(){
     let userCopyParamsArr = captureTableData("#userCopy table:nth-child(2)");
     let userCopyProfilesArr = captureTableData("#userCopy table:nth-child(3)");
 
-    console.log("Model User Functions:", modelUserFunctionsArr);
-    console.log("Model User Parameters:", modelUserParamsArr);
-    console.log("Model User Profiles:", modelUserProfilesArr);
 
-    console.log("User Copy Functions:", userCopyFunctionsArr);
-    console.log("User Copy Parameters:", userCopyParamsArr);
-    console.log("User Copy Profiles:", userCopyProfilesArr);
 }
 
 
@@ -96,4 +90,12 @@ function captureTableData(selector){
     });
 
     return dataArray;
+}
+
+function compareSingleColumnTable(){
+    
+}
+
+function compareDoubleColumnTable(){
+    
 }
