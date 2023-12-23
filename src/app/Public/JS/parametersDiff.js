@@ -70,7 +70,9 @@ function capturesAllDataFromAllTables(){
     let userCopyParamsArr = captureTableData("#userCopy table:nth-child(2)");
     let userCopyProfilesArr = captureTableData("#userCopy table:nth-child(3)");
 
-
+    compareSingleColumnTable(modelUserFunctionsArr, userCopyFunctionsArr);
+    compareDoubleColumnTable(modelUserParamsArr, userCopyParamsArr);
+    compareSingleColumnTable(modelUserProfilesArr, userCopyProfilesArr);
 }
 
 
@@ -92,8 +94,15 @@ function captureTableData(selector){
     return dataArray;
 }
 
-function compareSingleColumnTable(){
+function compareSingleColumnTable(modelUserArr, copyUserArr){
+    const modelArr = modelUserArr;
+    const copyArr = copyUserArr;
     
+    for(let i = 0; i < modelArr.length; i++){
+        if(copyArr.some(item=> JSON.stringify(item) === JSON.stringify(modelArr[i]))){
+            
+        }
+    }
 }
 
 function compareDoubleColumnTable(){
