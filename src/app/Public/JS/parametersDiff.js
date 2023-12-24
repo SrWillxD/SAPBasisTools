@@ -62,13 +62,13 @@ function compareButtonListener(){
 }
 
 function capturesAllDataFromAllTables(){
-    let modelUserFunctionsArr = captureTableData("#modelUser table:nth-child(1)");
+    let modelUserFunctionsArr = [].concat(...captureTableData("#modelUser table:nth-child(1)")).filter(item=> item.length > 0);
     let modelUserParamsArr = captureTableData("#modelUser table:nth-child(2)");
-    let modelUserProfilesArr = captureTableData("#modelUser table:nth-child(3)");
+    let modelUserProfilesArr = [].concat(...captureTableData("#modelUser table:nth-child(3)")).filter(item=> item.length > 0);
 
-    let userCopyFunctionsArr = captureTableData("#userCopy table:nth-child(1)");
+    let userCopyFunctionsArr = [].concat(...captureTableData("#userCopy table:nth-child(1)")).filter(item=> item.length > 0);
     let userCopyParamsArr = captureTableData("#userCopy table:nth-child(2)");
-    let userCopyProfilesArr = captureTableData("#userCopy table:nth-child(3)");
+    let userCopyProfilesArr = [].concat(...captureTableData("#userCopy table:nth-child(3)")).filter(item=> item.length > 0);
 
     compareSingleColumnTable(modelUserFunctionsArr, userCopyFunctionsArr);
     compareDoubleColumnTable(modelUserParamsArr, userCopyParamsArr);
@@ -95,16 +95,17 @@ function captureTableData(selector){
 }
 
 function compareSingleColumnTable(modelUserArr, copyUserArr){
-    const modelArr = modelUserArr;
-    const copyArr = copyUserArr;
-    
-    for(let i = 0; i < modelArr.length; i++){
-        if(copyArr.some(item=> JSON.stringify(item) === JSON.stringify(modelArr[i]))){
-            
-        }
-    }
+    const uniqueModelArr = modelUserArr.filter(item => !copyUserArr.some(copyItem => areItensEqual(item, copyItem)));
+    const uniqueCopyArr = copyUserArr.filter(item => !modelUserArr.some(copyItem => areItensEqual(item, copyItem)));
+
+    console.log(uniqueModelArr);
+    console.log(uniqueCopyArr);
 }
 
 function compareDoubleColumnTable(){
     
+}
+
+function areItensEqual(obj1, obj2){
+    return JSON.stringify(obj1) === JSON.stringify(obj2);
 }
