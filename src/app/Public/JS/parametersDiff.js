@@ -63,16 +63,18 @@ function compareButtonListener(){
 
 function capturesAllDataFromAllTables(){
     let modelUserFunctionsArr = [].concat(...captureTableData("#modelUser table:nth-child(1)")).filter(item=> item.length > 0);
-    let modelUserParamsArr = captureTableData("#modelUser table:nth-child(2)");
+    let modelUserParamsArr = captureTableData("#modelUser table:nth-child(2)").filter(row => row[0].trim() !== '');
     let modelUserProfilesArr = [].concat(...captureTableData("#modelUser table:nth-child(3)")).filter(item=> item.length > 0);
 
     let userCopyFunctionsArr = [].concat(...captureTableData("#userCopy table:nth-child(1)")).filter(item=> item.length > 0);
-    let userCopyParamsArr = captureTableData("#userCopy table:nth-child(2)");
+    let userCopyParamsArr = captureTableData("#userCopy table:nth-child(2)").filter(row => row[0].trim() !== '');
     let userCopyProfilesArr = [].concat(...captureTableData("#userCopy table:nth-child(3)")).filter(item=> item.length > 0);
 
-    differenceBetweenSingleColumnTables(modelUserFunctionsArr, userCopyFunctionsArr);
-    differenceBetweenDoubleColumnTables(modelUserParamsArr, userCopyParamsArr);
-    differenceBetweenSingleColumnTables(modelUserProfilesArr, userCopyProfilesArr);
+    const differenceBetweenFunctionsArr = differenceBetweenSingleColumnTables(modelUserFunctionsArr, userCopyFunctionsArr);
+    const differenceBetweenParamsArr = differenceBetweenDoubleColumnTables(modelUserParamsArr, userCopyParamsArr);
+    const differenceBetweenProfilesArr = differenceBetweenSingleColumnTables(modelUserProfilesArr, userCopyProfilesArr);
+
+
 }
 
 
@@ -96,14 +98,31 @@ function captureTableData(selector){
 
 function differenceBetweenSingleColumnTables(modelUserArr, copyUserArr){
     const uniqueModelArr = modelUserArr.filter(item => !copyUserArr.some(copyItem => areItensEqual(item, copyItem)));
-    const uniqueCopyArr = copyUserArr.filter(item => !modelUserArr.some(copyItem => areItensEqual(item, copyItem)));
-
-    console.log(uniqueModelArr);
-    console.log(uniqueCopyArr);
+    return uniqueModelArr;
 }
 
-function differenceBetweenDoubleColumnTables(){
-    
+function differenceBetweenDoubleColumnTables(modelUserArr, copyUserArr){
+    const modelUserKeysArr = modelUserArr.map(item=> item[0]);
+    const modelUserValuesArr = modelUserArr.map(item=>item[1]);
+
+    const copyUserKeysArr = copyUserArr.map(item => item[0]);
+    const copyUserValuesArr = copyUserArr.map(item => item[1]);
+
+    const iniqueModelArr = [];
+    const sameKeyDiffValues = [];
+
+    for(let i = 0; i < modelUserKeysArr.length; i++){
+        if(copyUserKeysArr.includes(modelUserKeysArr[i])){
+            const copyItemIndex = copyUserKeysArr.findIndex(item => areItensEqual(modelUserKeysArr[i], item));
+            
+            //descobrir se no indice i do modelUserValusArr e o indice copyItemIndex do copyUserValuesArr compreendem o mesmo valor.
+            if(modelUserValuesArr[i] === copyUserValuesArr[copyItemIndex]){
+
+            }
+
+        }
+        
+    }
 }
 
 function areItensEqual(obj1, obj2){
