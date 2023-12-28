@@ -114,15 +114,18 @@ function differenceBetweenDoubleColumnTables(modelUserArr, copyUserArr){
     for(let i = 0; i < modelUserKeysArr.length; i++){
         if(copyUserKeysArr.includes(modelUserKeysArr[i])){
             const copyItemIndex = copyUserKeysArr.findIndex(item => areItensEqual(modelUserKeysArr[i], item));
-            
-            //descobrir se no indice i do modelUserValusArr e o indice copyItemIndex do copyUserValuesArr compreendem o mesmo valor.
-            if(modelUserValuesArr[i] === copyUserValuesArr[copyItemIndex]){
 
+            if(modelUserValuesArr[i] !=copyUserValuesArr[copyItemIndex]){
+                sameKeyDiffValues.push([modelUserKeysArr[i], modelUserValuesArr[i]]);
             }
-
         }
         
+        if(!copyUserKeysArr.includes(modelUserKeysArr[i])){
+            iniqueModelArr.push([modelUserKeysArr[i], modelUserValuesArr[i]]);
+        }
     }
+    console.log(iniqueModelArr);
+    console.log(sameKeyDiffValues);
 }
 
 function areItensEqual(obj1, obj2){
