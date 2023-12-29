@@ -22,3 +22,6 @@ table td, table th{
     background-color: blueviolet;
 }
 
+#result-container {
+    display: none;
+}

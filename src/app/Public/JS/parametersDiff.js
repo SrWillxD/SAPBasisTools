@@ -74,7 +74,7 @@ function capturesAllDataFromAllTables(){
     const differenceBetweenParamsArr = differenceBetweenDoubleColumnTables(modelUserParamsArr, userCopyParamsArr);
     const differenceBetweenProfilesArr = differenceBetweenSingleColumnTables(modelUserProfilesArr, userCopyProfilesArr);
 
-
+    resultDiv(differenceBetweenFunctionsArr, differenceBetweenParamsArr, differenceBetweenProfilesArr);
 }
 
 
@@ -108,7 +108,7 @@ function differenceBetweenDoubleColumnTables(modelUserArr, copyUserArr){
     const copyUserKeysArr = copyUserArr.map(item => item[0]);
     const copyUserValuesArr = copyUserArr.map(item => item[1]);
 
-    const iniqueModelArr = [];
+    const uniqueModelArr = [];
     const sameKeyDiffValues = [];
 
     for(let i = 0; i < modelUserKeysArr.length; i++){
@@ -121,13 +121,48 @@ function differenceBetweenDoubleColumnTables(modelUserArr, copyUserArr){
         }
         
         if(!copyUserKeysArr.includes(modelUserKeysArr[i])){
-            iniqueModelArr.push([modelUserKeysArr[i], modelUserValuesArr[i]]);
+            uniqueModelArr.push([modelUserKeysArr[i], modelUserValuesArr[i]]);
         }
     }
-    console.log(iniqueModelArr);
-    console.log(sameKeyDiffValues);
+    return [uniqueModelArr, sameKeyDiffValues];
 }
 
 function areItensEqual(obj1, obj2){
     return JSON.stringify(obj1) === JSON.stringify(obj2);
+}
+
+function resultDiv(differenceBetweenFunctionsArr, differenceBetweenParamsArr, differenceBetweenProfilesArr){
+    let novaDiv = document.createElement("div");
+    novaDiv.id = "nova-div-resultados";
+
+    let resultContainer = document.getElementById("result-container");
+
+    differenceBetweenFunctionsArr.forEach((dados)=>{
+        let paragrafo = document.createElement("p");
+        paragrafo.textContent = dados;
+        novaDiv.appendChild(paragrafo);
+    });
+    novaDiv.style.backgroundColor = "#013";
+    resultContainer.appendChild(novaDiv);
+
+    novaDiv = document.createElement("div");
+    differenceBetweenParamsArr.forEach((dados)=>{
+        let paragrafo = document.createElement("p");
+        paragrafo.textContent = dados;
+        novaDiv.appendChild(paragrafo);
+    });
+    novaDiv.style.backgroundColor = "#257";
+    resultContainer.appendChild(novaDiv);
+
+
+    novaDiv = document.createElement("div");
+    differenceBetweenProfilesArr.forEach((dados)=>{
+        let paragrafo = document.createElement("p");
+        paragrafo.textContent = dados;
+        novaDiv.appendChild(paragrafo);
+    });
+    novaDiv.style.backgroundColor = "#393";
+    resultContainer.appendChild(novaDiv);
+
+    resultContainer.style.display = "block";
 }
