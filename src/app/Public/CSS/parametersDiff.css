@@ -25,3 +25,18 @@ table td, table th{
 #result-container {
     display: none;
 }
+
+#result-functions{
+    display: none;
+    background-color: #661;
+}
+
+#result-params{
+    display: none;
+    background-color: #662;
+}
+
+#result-profiles{
+    display: none;
+    background-color: #663;
+}

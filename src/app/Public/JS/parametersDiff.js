@@ -74,7 +74,8 @@ function capturesAllDataFromAllTables(){
     const differenceBetweenParamsArr = differenceBetweenDoubleColumnTables(modelUserParamsArr, userCopyParamsArr);
     const differenceBetweenProfilesArr = differenceBetweenSingleColumnTables(modelUserProfilesArr, userCopyProfilesArr);
 
-    resultDiv(differenceBetweenFunctionsArr, differenceBetweenParamsArr, differenceBetweenProfilesArr);
+    buildFunctionDiv(differenceBetweenFunctionsArr);
+    buildParamsDiv(differenceBetweenParamsArr);
 }
 
 
@@ -131,7 +132,7 @@ function areItensEqual(obj1, obj2){
     return JSON.stringify(obj1) === JSON.stringify(obj2);
 }
 
-function resultDiv(differenceBetweenFunctionsArr, differenceBetweenParamsArr, differenceBetweenProfilesArr){
+/*function resultDiv(differenceBetweenFunctionsArr, differenceBetweenParamsArr, differenceBetweenProfilesArr){
     let novaDiv = document.createElement("div");
     novaDiv.id = "nova-div-resultados";
 
@@ -164,5 +165,61 @@ function resultDiv(differenceBetweenFunctionsArr, differenceBetweenParamsArr, di
     novaDiv.style.backgroundColor = "#393";
     resultContainer.appendChild(novaDiv);
 
+    resultContainer.style.display = "block";
+}*/
+
+function buildFunctionDiv(resultArr){
+    let resultContainer = document.getElementById("result-container");
+    let resultFunctionsDiv = document.getElementById("result-functions");
+    let list = document.createElement("ul");
+
+    resultArr.forEach((resultado)=>{
+        let itemLista = document.createElement("li");
+        itemLista.textContent = resultado;
+        list.appendChild(itemLista);
+    });
+
+    resultFunctionsDiv.appendChild(list);
+    resultFunctionsDiv.style.display = "block";
+    resultContainer.style.display = "block";
+}
+
+function buildParamsDiv(arrayBidimensional) {
+    let resultParamsDiv = document.getElementById("result-params");
+    let resultContainer = document.getElementById("result-container");
+
+    arrayBidimensional.forEach((subArray, index)=>{
+        let table = document.createElement("table");
+        let tbody = document.createElement("tbody");
+
+        subArray.forEach((item)=>{
+            let row = document.createElement("tr");
+
+            item.forEach((value) => {
+                let cell = document.createElement("td");
+                cell.textContent = value;
+                row.appendChild(cell);
+            });
+
+            tbody.appendChild(row);
+        });
+
+        table.appendChild(tbody);
+
+        if(index === 0){
+            table.id = "uniqueModelArr";
+        }else if(index === 1){
+            table.id = "sameKeyDiffValues";
+        }
+        //! Arrumar a ordem em que as tabelas são anexadas
+        if(index === 0){
+            resultParamsDiv.insertBefore(table, resultParamsDiv.firstChild.nextSibling);
+        }else if(index === 1){
+            resultParamsDiv.appendChild(table);
+        }
+
+    });
+
+    resultParamsDiv.style.display = "block";
     resultContainer.style.display = "block";
 }
