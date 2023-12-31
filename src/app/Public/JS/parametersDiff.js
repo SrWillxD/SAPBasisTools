@@ -76,6 +76,7 @@ function capturesAllDataFromAllTables(){
 
     buildFunctionDiv(differenceBetweenFunctionsArr);
     buildParamsDiv(differenceBetweenParamsArr);
+    buildProfilesDiv(differenceBetweenProfilesArr);
 }
 
 
@@ -175,10 +176,10 @@ function buildFunctionDiv(resultArr){
     let spanMessage = document.createElement("span");
     spanMessage.textContent = "Para igualar o usuário cópia com o modelo você deve adicionar as seguintes funções:";
 
-    resultArr.forEach((resultado)=>{
-        let itemLista = document.createElement("li");
-        itemLista.textContent = resultado;
-        list.appendChild(itemLista);
+    resultArr.forEach((item)=>{
+        let itemList = document.createElement("li");
+        itemList.textContent = item;
+        list.appendChild(itemList);
     });
 
     resultFunctionsDiv.appendChild(spanMessage);
@@ -187,7 +188,7 @@ function buildFunctionDiv(resultArr){
     resultContainer.style.display = "block";
 }
 
-function buildParamsDiv(arrayBidimensional){
+function buildParamsDiv(resultArr){
     let resultParamsDiv = document.getElementById("result-params");
     let resultContainer = document.getElementById("result-container");
     let uniqueModelSpan = document.createElement('span');
@@ -196,7 +197,7 @@ function buildParamsDiv(arrayBidimensional){
     uniqueModelSpan.textContent = "Para igualar o usuário cópia com o modelo você deve adicionar os seguintes parâmetros:";
     sameKeyDiffValuesSpan.textContent = "Porem, cuidado com estes parâmetros, pois, eles já estão presentes e com valores diferentes:";
 
-    arrayBidimensional.forEach((subArray, index)=>{
+    resultArr.forEach((subArray, index)=>{
         let table = document.createElement("table");
         let tbody = document.createElement("tbody");
 
@@ -231,5 +232,24 @@ function buildParamsDiv(arrayBidimensional){
     });
 
     resultParamsDiv.style.display = "block";
+    resultContainer.style.display = "block";
+}
+
+function buildProfilesDiv(resultArr){
+    let resultContainer = document.getElementById("result-container");
+    let resultProfilesDiv = document.getElementById("result-profiles");
+    let list = document.createElement("ul");
+    let spanMessage = document.createElement("span");
+    spanMessage.textContent = "Para igualar o usuário cópia com o modelo você deve adicionar os seguintes perfis:";
+
+    resultArr.forEach((item)=>{
+        let itemList = document.createElement("li");
+        itemList.textContent = item;
+        list.appendChild(itemList);
+    });
+
+    resultProfilesDiv.appendChild(spanMessage);
+    resultProfilesDiv.appendChild(list);
+    resultProfilesDiv.style.display = "block";
     resultContainer.style.display = "block";
 }
