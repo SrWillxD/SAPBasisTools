@@ -172,6 +172,8 @@ function buildFunctionDiv(resultArr){
     let resultContainer = document.getElementById("result-container");
     let resultFunctionsDiv = document.getElementById("result-functions");
     let list = document.createElement("ul");
+    let spanMessage = document.createElement("span");
+    spanMessage.textContent = "Para igualar o usuário cópia com o modelo você deve adicionar as seguintes funções:";
 
     resultArr.forEach((resultado)=>{
         let itemLista = document.createElement("li");
@@ -179,6 +181,7 @@ function buildFunctionDiv(resultArr){
         list.appendChild(itemLista);
     });
 
+    resultFunctionsDiv.appendChild(spanMessage);
     resultFunctionsDiv.appendChild(list);
     resultFunctionsDiv.style.display = "block";
     resultContainer.style.display = "block";
