@@ -133,42 +133,6 @@ function areItensEqual(obj1, obj2){
     return JSON.stringify(obj1) === JSON.stringify(obj2);
 }
 
-/*function resultDiv(differenceBetweenFunctionsArr, differenceBetweenParamsArr, differenceBetweenProfilesArr){
-    let novaDiv = document.createElement("div");
-    novaDiv.id = "nova-div-resultados";
-
-    let resultContainer = document.getElementById("result-container");
-
-    differenceBetweenFunctionsArr.forEach((dados)=>{
-        let paragrafo = document.createElement("p");
-        paragrafo.textContent = dados;
-        novaDiv.appendChild(paragrafo);
-    });
-    novaDiv.style.backgroundColor = "#013";
-    resultContainer.appendChild(novaDiv);
-
-    novaDiv = document.createElement("div");
-    differenceBetweenParamsArr.forEach((dados)=>{
-        let paragrafo = document.createElement("p");
-        paragrafo.textContent = dados;
-        novaDiv.appendChild(paragrafo);
-    });
-    novaDiv.style.backgroundColor = "#257";
-    resultContainer.appendChild(novaDiv);
-
-
-    novaDiv = document.createElement("div");
-    differenceBetweenProfilesArr.forEach((dados)=>{
-        let paragrafo = document.createElement("p");
-        paragrafo.textContent = dados;
-        novaDiv.appendChild(paragrafo);
-    });
-    novaDiv.style.backgroundColor = "#393";
-    resultContainer.appendChild(novaDiv);
-
-    resultContainer.style.display = "block";
-}*/
-
 function buildFunctionDiv(resultArr){
     if(resultArr.length != 0){
         let resultContainer = document.getElementById("result-container");
