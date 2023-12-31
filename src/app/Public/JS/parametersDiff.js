@@ -170,86 +170,92 @@ function areItensEqual(obj1, obj2){
 }*/
 
 function buildFunctionDiv(resultArr){
-    let resultContainer = document.getElementById("result-container");
-    let resultFunctionsDiv = document.getElementById("result-functions");
-    let list = document.createElement("ul");
-    let spanMessage = document.createElement("span");
-    spanMessage.textContent = "Para igualar o usuário cópia com o modelo você deve adicionar as seguintes funções:";
+    if(resultArr.length != 0){
+        let resultContainer = document.getElementById("result-container");
+        let resultFunctionsDiv = document.getElementById("result-functions");
+        let list = document.createElement("ul");
+        let spanMessage = document.createElement("span");
+        spanMessage.textContent = "Para igualar o usuário cópia com o modelo você deve adicionar as seguintes funções:";
 
-    resultArr.forEach((item)=>{
-        let itemList = document.createElement("li");
-        itemList.textContent = item;
-        list.appendChild(itemList);
-    });
+        resultArr.forEach((item)=>{
+            let itemList = document.createElement("li");
+            itemList.textContent = item;
+            list.appendChild(itemList);
+        });
 
-    resultFunctionsDiv.appendChild(spanMessage);
-    resultFunctionsDiv.appendChild(list);
-    resultFunctionsDiv.style.display = "block";
-    resultContainer.style.display = "block";
+        resultFunctionsDiv.appendChild(spanMessage);
+        resultFunctionsDiv.appendChild(list);
+        resultFunctionsDiv.style.display = "block";
+        resultContainer.style.display = "block";
+    }
 }
 
 function buildParamsDiv(resultArr){
-    let resultParamsDiv = document.getElementById("result-params");
-    let resultContainer = document.getElementById("result-container");
-    let uniqueModelSpan = document.createElement('span');
-    let sameKeyDiffValuesSpan = document.createElement('span');
+    if(resultArr[0].length != 0 || resultArr[0].length != 0){
+        let resultParamsDiv = document.getElementById("result-params");
+        let resultContainer = document.getElementById("result-container");
+        let uniqueModelSpan = document.createElement('span');
+        let sameKeyDiffValuesSpan = document.createElement('span');
 
-    uniqueModelSpan.textContent = "Para igualar o usuário cópia com o modelo você deve adicionar os seguintes parâmetros:";
-    sameKeyDiffValuesSpan.textContent = "Porem, cuidado com estes parâmetros, pois, eles já estão presentes e com valores diferentes:";
+        uniqueModelSpan.textContent = "Para igualar o usuário cópia com o modelo você deve adicionar os seguintes parâmetros:";
+        sameKeyDiffValuesSpan.textContent = "Porem, cuidado com estes parâmetros, pois, eles já estão presentes e com valores diferentes:";
 
-    resultArr.forEach((subArray, index)=>{
-        let table = document.createElement("table");
-        let tbody = document.createElement("tbody");
+        resultArr.forEach((subArray, index)=>{
+            let table = document.createElement("table");
+            let tbody = document.createElement("tbody");
 
 
-        subArray.forEach((item)=>{
-            let row = document.createElement("tr");
+            subArray.forEach((item)=>{
+                let row = document.createElement("tr");
 
-            item.forEach((value) => {
-                let cell = document.createElement("td");
-                cell.textContent = value;
-                row.appendChild(cell);
+                item.forEach((value) => {
+                    let cell = document.createElement("td");
+                    cell.textContent = value;
+                    row.appendChild(cell);
+                });
+
+                tbody.appendChild(row);
             });
 
-            tbody.appendChild(row);
+            table.appendChild(tbody);
+
+            if(index === 0){
+                table.id = "uniqueModelArr";
+            }else if(index === 1){
+                table.id = "sameKeyDiffValues";
+            }
+
+            if(index === 0){
+                resultParamsDiv.appendChild(uniqueModelSpan);
+                resultParamsDiv.appendChild(table);
+            }else if(index === 1){
+                resultParamsDiv.appendChild(sameKeyDiffValuesSpan);
+                resultParamsDiv.appendChild(table);
+            }
         });
 
-        table.appendChild(tbody);
-
-        if(index === 0){
-            table.id = "uniqueModelArr";
-        }else if(index === 1){
-            table.id = "sameKeyDiffValues";
-        }
-
-        if(index === 0){
-            resultParamsDiv.appendChild(uniqueModelSpan);
-            resultParamsDiv.appendChild(table);
-        }else if(index === 1){
-            resultParamsDiv.appendChild(sameKeyDiffValuesSpan);
-            resultParamsDiv.appendChild(table);
-        }
-    });
-
-    resultParamsDiv.style.display = "block";
-    resultContainer.style.display = "block";
+        resultParamsDiv.style.display = "block";
+        resultContainer.style.display = "block";
+    }
 }
 
 function buildProfilesDiv(resultArr){
-    let resultContainer = document.getElementById("result-container");
-    let resultProfilesDiv = document.getElementById("result-profiles");
-    let list = document.createElement("ul");
-    let spanMessage = document.createElement("span");
-    spanMessage.textContent = "Para igualar o usuário cópia com o modelo você deve adicionar os seguintes perfis:";
+    if(resultArr.length != 0){
+        let resultContainer = document.getElementById("result-container");
+        let resultProfilesDiv = document.getElementById("result-profiles");
+        let list = document.createElement("ul");
+        let spanMessage = document.createElement("span");
+        spanMessage.textContent = "Para igualar o usuário cópia com o modelo você deve adicionar os seguintes perfis:";
 
-    resultArr.forEach((item)=>{
-        let itemList = document.createElement("li");
-        itemList.textContent = item;
-        list.appendChild(itemList);
-    });
+        resultArr.forEach((item)=>{
+            let itemList = document.createElement("li");
+            itemList.textContent = item;
+            list.appendChild(itemList);
+        });
 
-    resultProfilesDiv.appendChild(spanMessage);
-    resultProfilesDiv.appendChild(list);
-    resultProfilesDiv.style.display = "block";
-    resultContainer.style.display = "block";
+        resultProfilesDiv.appendChild(spanMessage);
+        resultProfilesDiv.appendChild(list);
+        resultProfilesDiv.style.display = "block";
+        resultContainer.style.display = "block";
+    }
 }
