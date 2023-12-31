@@ -184,13 +184,19 @@ function buildFunctionDiv(resultArr){
     resultContainer.style.display = "block";
 }
 
-function buildParamsDiv(arrayBidimensional) {
+function buildParamsDiv(arrayBidimensional){
     let resultParamsDiv = document.getElementById("result-params");
     let resultContainer = document.getElementById("result-container");
+    let uniqueModelSpan = document.createElement('span');
+    let sameKeyDiffValuesSpan = document.createElement('span');
+
+    uniqueModelSpan.textContent = "Para igualar o usuário cópia com o modelo você deve adicionar os seguintes parâmetros:";
+    sameKeyDiffValuesSpan.textContent = "Porem, cuidado com estes parâmetros, pois, eles já estão presentes e com valores diferentes:";
 
     arrayBidimensional.forEach((subArray, index)=>{
         let table = document.createElement("table");
         let tbody = document.createElement("tbody");
+
 
         subArray.forEach((item)=>{
             let row = document.createElement("tr");
@@ -211,13 +217,14 @@ function buildParamsDiv(arrayBidimensional) {
         }else if(index === 1){
             table.id = "sameKeyDiffValues";
         }
-        //! Arrumar a ordem em que as tabelas são anexadas
+
         if(index === 0){
-            resultParamsDiv.insertBefore(table, resultParamsDiv.firstChild.nextSibling);
+            resultParamsDiv.appendChild(uniqueModelSpan);
+            resultParamsDiv.appendChild(table);
         }else if(index === 1){
+            resultParamsDiv.appendChild(sameKeyDiffValuesSpan);
             resultParamsDiv.appendChild(table);
         }
-
     });
 
     resultParamsDiv.style.display = "block";
