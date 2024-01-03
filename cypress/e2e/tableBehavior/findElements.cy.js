@@ -23,9 +23,6 @@ describe("When the value conversion button is clicked, the user model values mus
 
 });
 
-describe("When adding more than 17 rows to the tables, they must expand according to the amount.", ()=>{
-
-});
 
 describe("Check the veracity of the results when changes are required for the user.", ()=>{
 
