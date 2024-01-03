@@ -5,12 +5,42 @@ function applicationLauncher(){
     compareButtonListener();
 }
 
+function addRowsIfNeeded(table, clipboardEvent){
+    let tbody = table.querySelector('tbody');
+    let currentRowCount = tbody.rows.length;
+    let maxRowsToAdd = 0;
+    let clipboardData = clipboardEvent.clipboardData || window.ClipboardEvent;
+    let pastedData = clipboardData.getData('text/plain');
+    let rows = pastedData.split('\n');
+
+
+    for(let i = 0; i < rows.length; i++){
+        if(rows[i].trim() !== ''){
+            maxRowsToAdd++;
+        }
+    }
+
+    let difference = maxRowsToAdd - currentRowCount;
+
+    if(difference > 0){
+        for(let i = 0; i < difference; i++){
+            let newRow = tbody.insertRow();
+
+            for(let j = 0; j < table.rows[0].cells.length; j++){
+                let newCell = newRow.insertCell();
+                newCell.setAttribute('contenteditable', 'true');
+            }
+        }
+    }
+}
+
 function addingPasteReplicationBehaviorToInputTables(){
-    document.addEventListener('DOMContentLoaded', function(){
+    document.addEventListener('DOMContentLoaded', ()=>{
         let tables = document.querySelectorAll("table");
 
         tables.forEach(table =>{
             table.addEventListener("paste", clipboardEvent =>{
+                addRowsIfNeeded(table, clipboardEvent);
                 processPastedData(clipboardEvent, clipboardEvent.target);
                 replaceNonBreakingSpace(table);
             });
