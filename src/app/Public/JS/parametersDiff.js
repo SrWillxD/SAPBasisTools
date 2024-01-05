@@ -169,7 +169,9 @@ function buildFunctionDiv(resultArr){
         let resultFunctionsDiv = document.getElementById("result-functions");
         let list = document.createElement("ul");
         let spanMessage = document.createElement("span");
+
         spanMessage.textContent = "Para igualar o usuário cópia com o modelo você deve adicionar as seguintes funções:";
+        resultFunctionsDiv.innerHTML = "";
 
         resultArr.forEach((item)=>{
             let itemList = document.createElement("li");
@@ -186,18 +188,20 @@ function buildFunctionDiv(resultArr){
 
 function buildParamsDiv(resultArr){
     if(resultArr[0].length != 0 || resultArr[0].length != 0){
-        let resultParamsDiv = document.getElementById("result-params");
         let resultContainer = document.getElementById("result-container");
+        let resultParamsDiv = document.getElementById("result-params");
         let uniqueModelSpan = document.createElement('span');
         let sameKeyDiffValuesSpan = document.createElement('span');
 
         uniqueModelSpan.textContent = "Para igualar o usuário cópia com o modelo você deve adicionar os seguintes parâmetros:";
         sameKeyDiffValuesSpan.textContent = "Porem, cuidado com estes parâmetros, pois, eles já estão presentes e com valores diferentes:";
+        resultParamsDiv.innerHTML = "";
 
         resultArr.forEach((subArray, index)=>{
             let table = document.createElement("table");
             let tbody = document.createElement("tbody");
 
+            table.setAttribute('style', 'white-space: pre');
 
             subArray.forEach((item)=>{
                 let row = document.createElement("tr");
@@ -240,6 +244,7 @@ function buildProfilesDiv(resultArr){
         let list = document.createElement("ul");
         let spanMessage = document.createElement("span");
         spanMessage.textContent = "Para igualar o usuário cópia com o modelo você deve adicionar os seguintes perfis:";
+        resultProfilesDiv.innerHTML = "";
 
         resultArr.forEach((item)=>{
             let itemList = document.createElement("li");
