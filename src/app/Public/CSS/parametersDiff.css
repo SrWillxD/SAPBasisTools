@@ -21,14 +21,14 @@ th{
     
     color: #4DC3FA;
     padding: 5px;
-    border: 1px solid #ccc;
+    border: 1.7px solid #ccc;
 }
 
 td{
     height: 30px;
     font-size: 20px;
     vertical-align: middle;
-    border: 1px solid #ccc;
+    border: 1.7px solid #ccc;
 }
 #modelUser{
     display: flex;
@@ -140,4 +140,15 @@ td{
   left: 0;
   top: 0;
   border-radius: 10px;
+}
+
+
+::-webkit-scrollbar{
+	width: 12px;
+	background-color: #1F2739;
+}
+
+::-webkit-scrollbar-thumb{
+	border-radius: 10px;
+	background-color: #11151e;
 }
