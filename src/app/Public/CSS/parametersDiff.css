@@ -26,28 +26,21 @@ th{
 
 td{
     height: 30px;
+    font-size: 20px;
     vertical-align: middle;
     border: 1px solid #ccc;
 }
 #modelUser{
-
     display: flex;
-
 }
 
 #userCopy{
-
     display: flex;
-
 }
 
 
 #compareButtonDIV{
-    background-color: blueviolet;
-}
-
-#compareButtonBTN{
-
+    padding: 10px 10px;
 }
 
 #result-container {
@@ -55,18 +48,27 @@ td{
 }
 
 #result-functions{
+    border-top: 5px solid #7200f4;
+    margin-top: 10px;
     display: none;
-    background-color: #661;
+    color:#A7A1AE;
+    background-color:#1F2739;
 }
 
 #result-params{
+    border-top: 5px solid #7200f4;
+    margin-top: 10px;
     display: none;
-    background-color: #662;
+    color:#A7A1AE;
+    background-color:#1F2739;
 }
 
 #result-profiles{
+    border-top: 5px solid #7200f4;
+    margin-top: 10px;
     display: none;
-    background-color: #663;
+    color:#A7A1AE;
+    background-color:#1F2739;
 }
 
 
