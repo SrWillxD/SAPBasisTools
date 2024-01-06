@@ -226,7 +226,7 @@ function buildParamsDiv(resultArr){
             if(index === 0){
                 resultParamsDiv.appendChild(uniqueModelSpan);
                 resultParamsDiv.appendChild(table);
-            }else if(index === 1){
+            }else if(index === 1 && resultArr[1].length != 0){
                 resultParamsDiv.appendChild(sameKeyDiffValuesSpan);
                 resultParamsDiv.appendChild(table);
             }
