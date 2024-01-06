@@ -5,11 +5,14 @@ describe('Find elements', ()=>{
         cy.visit('http://localhost:3333/params');
         cy.get('#compareButtonBTN');
     });
+
+    it("When the 'Compare' button is clicked without any content in the tables, the result div should not be displayed.", ()=>{
+        cy.visit('http://localhost:3333/params');
+        cy.get('#compareButtonBTN').click();
+        cy.get('#result-container').should('not.be.visible');
+    });
 });
 
-describe("When the 'Compare' button is clicked without any content in the tables, the result div should not be displayed.", ()=>{
-    
-});
 
 describe("When the 'Compare' button is clicked with real data in the table, but it is not necessary to perform any action, the corresponding result div should be shown informing that the users are already in sync.", ()=>{
 
