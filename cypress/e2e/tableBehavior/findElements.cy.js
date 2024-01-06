@@ -90,6 +90,32 @@ Z_USERS`
             .find('ul')
             .should('have.length', 1);
     });
+
+    it('Complementary test to the test above, in this case the scenario where there are parameters with the same keys but different values will be treated.', ()=>{
+        cy.visit('http://localhost:3333/params');
+
+        const parameterDataModified =`CAC	A001
+ERB	A001`;
+
+        cy.get('#modelUser > :nth-child(2) > tbody > :nth-child(1) > :nth-child(1)')
+            .invoke('text', parameterData)
+            .trigger('paste', { clipboardData: { getData: () => parameterData } });
+
+        cy.get('#userCopy > :nth-child(2) > tbody > :nth-child(1) > :nth-child(1)')
+            .invoke('text', parameterDataModified)
+            .trigger('paste', { clipboardData: { getData: () => parameterDataModified } });
+
+        cy.get('#compareButtonBTN').click();
+        cy.get('#compareButtonBTN').click();
+
+        cy.get('#result-params')
+            .should('exist')
+            .find('span')
+            .should('have.length', 2);
+        cy.get('#result-params')
+            .find('table')
+            .should('have.length', 2);
+    });
 });
 
 
@@ -110,3 +136,4 @@ describe("Check the veracity of the results when changes are required for the us
 
 });
 
+//! When only parameters with equal keys and different values are entered, the result is not shown.
