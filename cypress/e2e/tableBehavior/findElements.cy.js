@@ -136,4 +136,8 @@ describe("Check the veracity of the results when changes are required for the us
 
 });
 
-//! When only parameters with equal keys and different values are entered, the result is not shown.
+describe("When only parameters with equal keys and different values are entered, the result should be shown in the same way.",()=>{
+
+});
+
+//! When we copy the data from the result div, the spaces are not copied.
