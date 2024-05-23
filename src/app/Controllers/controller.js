@@ -2,7 +2,7 @@ const controllerOBJ = {
     home(req, res, next) {
         res.render('home');
     },
-    params(req, res, next) {
+    rolesParamsProfilesDiff(req, res, next) {
         res.render('rolesParamsProfilesDiff');
     }
 }
