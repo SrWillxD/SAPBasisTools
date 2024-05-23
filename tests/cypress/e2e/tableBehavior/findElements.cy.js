@@ -1,6 +1,12 @@
 /// <reference types="Cypress"/>
 
-describe('Find elements', ()=>{
+const dotenv = require('dotenv')
+
+dotenv.config();
+
+const port = process.env.PORT || 3333;
+
+describe('Find elements', () => {
     const parameterData = `/STMC/USER_ID	USR_TDZLGAJ6HAPORO
 AREA_ID	S_AREA_CMG
 BCS_ADMIN_TREE	CC
@@ -37,19 +43,19 @@ SAP_SUP_FI
 Z_TEMP_SE38
 Z_USERS`
 
-    it("Find button compareButtonBTN", ()=>{
-        cy.visit('http://localhost:3333/params');
+    it("Find button compareButtonBTN", () => {
+        cy.visit(`http://localhost:${port}/params`);
         cy.get('#compareButtonBTN');
     });
-    
-    it("When the 'Compare' button is clicked without any content in the tables, the result div should not be displayed.", ()=>{
-        cy.visit('http://localhost:3333/params');
+
+    it("When the 'Compare' button is clicked without any content in the tables, the result div should not be displayed.", () => {
+        cy.visit(`http://localhost:${port}/params`);
         cy.get('#compareButtonBTN').click();
         cy.get('#result-container').should('not.be.visible');
     });
-    
-    it("When a result already exists, remove it before inserting the new one.", ()=>{
-        cy.visit('http://localhost:3333/params');
+
+    it("When a result already exists, remove it before inserting the new one.", () => {
+        cy.visit(`http://localhost:${port}/params`);
 
         cy.get('#modelUser > :nth-child(1) > tbody > :nth-child(1) > td')
             .invoke('text', roleData)
@@ -81,7 +87,7 @@ Z_USERS`
         cy.get('#result-params')
             .find('table')
             .should('have.length', 1);
-        
+
         cy.get('#result-profiles')
             .should('exist')
             .find('span')
@@ -91,10 +97,10 @@ Z_USERS`
             .should('have.length', 1);
     });
 
-    it('Complementary test to the test above, in this case the scenario where there are parameters with the same keys but different values will be treated.', ()=>{
-        cy.visit('http://localhost:3333/params');
+    it('Complementary test to the test above, in this case the scenario where there are parameters with the same keys but different values will be treated.', () => {
+        cy.visit(`http://localhost:${port}/params`);
 
-        const parameterDataModified =`CAC	A001
+        const parameterDataModified = `CAC	A001
 ERB	A001`;
 
         cy.get('#modelUser > :nth-child(2) > tbody > :nth-child(1) > :nth-child(1)')
@@ -119,24 +125,24 @@ ERB	A001`;
 });
 
 
-describe("When the 'Compare' button is clicked with real data in the table, but it is not necessary to perform any action, the corresponding result div should be shown informing that the users are already in sync.", ()=>{
+describe("When the 'Compare' button is clicked with real data in the table, but it is not necessary to perform any action, the corresponding result div should be shown informing that the users are already in sync.", () => {
 
 });
 
-describe("When entering duplicate data, the result must be shown without duplicate values.", ()=>{
-    
-});
-
-describe("When the value conversion button is clicked, the user model values must change table with the user copy.", ()=>{
+describe("When entering duplicate data, the result must be shown without duplicate values.", () => {
 
 });
 
-
-describe("Check the veracity of the results when changes are required for the user.", ()=>{
+describe("When the value conversion button is clicked, the user model values must change table with the user copy.", () => {
 
 });
 
-describe("When only parameters with equal keys and different values are entered, the result should be shown in the same way.",()=>{
+
+describe("Check the veracity of the results when changes are required for the user.", () => {
+
+});
+
+describe("When only parameters with equal keys and different values are entered, the result should be shown in the same way.", () => {
 
 });
 

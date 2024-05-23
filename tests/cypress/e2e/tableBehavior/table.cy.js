@@ -1,13 +1,18 @@
 /// <reference types="Cypress"/>
+const dotenv = require('dotenv')
 
-function createArrayOfArrays(data){
+dotenv.config();
+
+const port = process.env.PORT || 3333;
+
+function createArrayOfArrays(data) {
     return data.split('\n').map(row => {
         const [left, right] = row.split('\t');
         return [left, right];
     });
 }
 
-describe('Paste replication behavior', ()=>{
+describe('Paste replication behavior', () => {
     const parameterData = `/STMC/USER_ID	USR_TDZLGAJ6HAPORO
 AREA_ID	S_AREA_CMG
 BCS_ADMIN_TREE	CC
@@ -45,25 +50,25 @@ Z_TEMP_SE38
 Z_USERS`
 
 
-    it("Must fill in all the fields in the model user's 'Funções' table.", ()=>{
+    it("Must fill in all the fields in the model user's 'Funções' table.", () => {
         const roleDataArray = roleData.trim().split('\n');
 
-        cy.visit('http://localhost:3333/params');
+        cy.visit(`http://localhost:${port}/params`);
 
         cy.get('#modelUser > :nth-child(1) > tbody > :nth-child(1) > td')
             .invoke('text', roleData)
             .trigger('paste', { clipboardData: { getData: () => roleData } });
 
-        for(let i = 0; i < roleDataArray.length; i++){
+        for (let i = 0; i < roleDataArray.length; i++) {
             const selector = `#modelUser > :nth-child(1) > tbody > :nth-child(${i + 1}) > td`;
             cy.get(selector).should('have.text', roleDataArray[i]);
         }
     });
 
-    it("Must fill in all the fields in the model user's 'Parâmetro' table.", () =>{
+    it("Must fill in all the fields in the model user's 'Parâmetro' table.", () => {
         const parameterDataArray = createArrayOfArrays(parameterData);
 
-        cy.visit('http://localhost:3333/params');
+        cy.visit(`http://localhost:${port}/params`);
 
         cy.get('#modelUser > :nth-child(2) > tbody > :nth-child(1) > :nth-child(1)')
             .invoke('text', parameterData)
@@ -72,53 +77,53 @@ Z_USERS`
         const paramTableArray = [];
         const paramTableSelector = '#modelUser table:nth-child(2) tbody tr';
 
-        cy.get(paramTableSelector).each(($row)=>{
+        cy.get(paramTableSelector).each(($row) => {
             const rowData = [];
 
-            cy.wrap($row).find('td').each(($cell) =>{
+            cy.wrap($row).find('td').each(($cell) => {
                 rowData.push($cell.text());
             });
 
             paramTableArray.push(rowData);
-        }).then(()=>{
+        }).then(() => {
             expect(parameterDataArray).to.deep.equal(paramTableArray);
         });
     });
 
-    it("Must fill in all the fields in the model user's 'Perfis' table.", ()=>{
+    it("Must fill in all the fields in the model user's 'Perfis' table.", () => {
         const roleDataArray = roleData.trim().split('\n');
 
-        cy.visit('http://localhost:3333/params');
+        cy.visit(`http://localhost:${port}/params`);
 
         cy.get('#modelUser > :nth-child(3) > tbody > :nth-child(1) > td')
             .invoke('text', roleData)
             .trigger('paste', { clipboardData: { getData: () => roleData } });
 
-        for(let i = 0; i < roleDataArray.length; i++){
+        for (let i = 0; i < roleDataArray.length; i++) {
             const selector = `#modelUser > :nth-child(3) > tbody > :nth-child(${i + 1}) > td`;
             cy.get(selector).should('have.text', roleDataArray[i]);
         }
     });
 
-    it("Must fill in all the fields in the copy user's 'Funções' table.", ()=>{
+    it("Must fill in all the fields in the copy user's 'Funções' table.", () => {
         const roleDataArray = roleData.trim().split('\n');
 
-        cy.visit('http://localhost:3333/params');
+        cy.visit(`http://localhost:${port}/params`);
 
         cy.get('#userCopy > :nth-child(1) > tbody > :nth-child(1) > td')
             .invoke('text', roleData)
             .trigger('paste', { clipboardData: { getData: () => roleData } });
 
-        for(let i = 0; i < roleDataArray.length; i++){
+        for (let i = 0; i < roleDataArray.length; i++) {
             const selector = `#userCopy > :nth-child(1) > tbody > :nth-child(${i + 1}) > td`;
             cy.get(selector).should('have.text', roleDataArray[i]);
         }
     });
 
-    it("Must fill in all the fields in the model user's 'Parâmetro' table.", () =>{
+    it("Must fill in all the fields in the model user's 'Parâmetro' table.", () => {
         const parameterDataArray = createArrayOfArrays(parameterData);
 
-        cy.visit('http://localhost:3333/params');
+        cy.visit(`http://localhost:${port}/params`);
 
         cy.get('#userCopy > :nth-child(2) > tbody > :nth-child(1) > :nth-child(1)')
             .invoke('text', parameterData)
@@ -127,36 +132,36 @@ Z_USERS`
         const paramTableArray = [];
         const paramTableSelector = '#userCopy table:nth-child(2) tbody tr';
 
-        cy.get(paramTableSelector).each(($row)=>{
+        cy.get(paramTableSelector).each(($row) => {
             const rowData = [];
 
-            cy.wrap($row).find('td').each(($cell) =>{
+            cy.wrap($row).find('td').each(($cell) => {
                 rowData.push($cell.text());
             });
 
             paramTableArray.push(rowData);
-        }).then(()=>{
+        }).then(() => {
             expect(parameterDataArray).to.deep.equal(paramTableArray);
         });
     });
 
-    it("Must fill in all the fields in the model user's 'Perfis' table.", ()=>{
+    it("Must fill in all the fields in the model user's 'Perfis' table.", () => {
         const roleDataArray = roleData.trim().split('\n');
 
-        cy.visit('http://localhost:3333/params');
+        cy.visit(`http://localhost:${port}/params`);
 
         cy.get('#userCopy > :nth-child(3) > tbody > :nth-child(1) > td')
             .invoke('text', roleData)
             .trigger('paste', { clipboardData: { getData: () => roleData } });
 
-        for(let i = 0; i < roleDataArray.length; i++){
+        for (let i = 0; i < roleDataArray.length; i++) {
             const selector = `#userCopy > :nth-child(3) > tbody > :nth-child(${i + 1}) > td`;
             cy.get(selector).should('have.text', roleDataArray[i]);
         }
     });
 });
 
-describe("When pasting data that contains more than 17 rows into the table, the table must expand to accommodate this data.", ()=>{
+describe("When pasting data that contains more than 17 rows into the table, the table must expand to accommodate this data.", () => {
     const parameterData = `/STMC/USER_ID	USR_TDZLGAJ6HAPORO
 AREA_ID	S_AREA_CMG
 BCS_ADMIN_TREE	CC
@@ -219,25 +224,25 @@ Z_GETEC_AUXILIAR_SF
 SAP_SUP_FI
 Z_TEMP_SE38
 Z_USERS`
-    it("Additional entries must be created to fully accommodate the data pasted into the model user's 'Functions' table.", ()=>{
+    it("Additional entries must be created to fully accommodate the data pasted into the model user's 'Functions' table.", () => {
         const roleDataArray = roleData.trim().split('\n');
 
-        cy.visit('http://localhost:3333/params');
+        cy.visit(`http://localhost:${port}/params`);
 
         cy.get('#modelUser > :nth-child(1) > tbody > :nth-child(1) > td')
             .invoke('text', roleData)
             .trigger('paste', { clipboardData: { getData: () => roleData } });
 
-        for(let i = 0; i < roleDataArray.length; i++){
+        for (let i = 0; i < roleDataArray.length; i++) {
             const selector = `#modelUser > :nth-child(1) > tbody > :nth-child(${i + 1}) > td`;
             cy.get(selector).should('have.text', roleDataArray[i]);
         }
     });
 
-    it("Additional entries must be created to fully accommodate the data pasted into the model user's 'Parâmetro' table.", () =>{
+    it("Additional entries must be created to fully accommodate the data pasted into the model user's 'Parâmetro' table.", () => {
         const parameterDataArray = createArrayOfArrays(parameterData);
 
-        cy.visit('http://localhost:3333/params');
+        cy.visit(`http://localhost:${port}/params`);
 
         cy.get('#modelUser > :nth-child(2) > tbody > :nth-child(1) > :nth-child(1)')
             .invoke('text', parameterData)
@@ -246,53 +251,53 @@ Z_USERS`
         const paramTableArray = [];
         const paramTableSelector = '#modelUser table:nth-child(2) tbody tr';
 
-        cy.get(paramTableSelector).each(($row)=>{
+        cy.get(paramTableSelector).each(($row) => {
             const rowData = [];
 
-            cy.wrap($row).find('td').each(($cell) =>{
+            cy.wrap($row).find('td').each(($cell) => {
                 rowData.push($cell.text());
             });
 
             paramTableArray.push(rowData);
-        }).then(()=>{
+        }).then(() => {
             expect(parameterDataArray).to.deep.equal(paramTableArray);
         });
     });
 
-    it("Additional entries must be created to fully accommodate the data pasted into the model user's 'Perfis' table.", ()=>{
+    it("Additional entries must be created to fully accommodate the data pasted into the model user's 'Perfis' table.", () => {
         const roleDataArray = roleData.trim().split('\n');
 
-        cy.visit('http://localhost:3333/params');
+        cy.visit(`http://localhost:${port}/params`);
 
         cy.get('#modelUser > :nth-child(3) > tbody > :nth-child(1) > td')
             .invoke('text', roleData)
             .trigger('paste', { clipboardData: { getData: () => roleData } });
 
-        for(let i = 0; i < roleDataArray.length; i++){
+        for (let i = 0; i < roleDataArray.length; i++) {
             const selector = `#modelUser > :nth-child(3) > tbody > :nth-child(${i + 1}) > td`;
             cy.get(selector).should('have.text', roleDataArray[i]);
         }
     });
 
-    it("Additional entries must be created to fully accommodate the data pasted into the copy user's 'Funções' table.", ()=>{
+    it("Additional entries must be created to fully accommodate the data pasted into the copy user's 'Funções' table.", () => {
         const roleDataArray = roleData.trim().split('\n');
 
-        cy.visit('http://localhost:3333/params');
+        cy.visit(`http://localhost:${port}/params`);
 
         cy.get('#userCopy > :nth-child(1) > tbody > :nth-child(1) > td')
             .invoke('text', roleData)
             .trigger('paste', { clipboardData: { getData: () => roleData } });
 
-        for(let i = 0; i < roleDataArray.length; i++){
+        for (let i = 0; i < roleDataArray.length; i++) {
             const selector = `#userCopy > :nth-child(1) > tbody > :nth-child(${i + 1}) > td`;
             cy.get(selector).should('have.text', roleDataArray[i]);
         }
     });
 
-    it("Additional entries must be created to fully accommodate the data pasted into the model user's 'Parâmetro' table.", () =>{
+    it("Additional entries must be created to fully accommodate the data pasted into the model user's 'Parâmetro' table.", () => {
         const parameterDataArray = createArrayOfArrays(parameterData);
 
-        cy.visit('http://localhost:3333/params');
+        cy.visit(`http://localhost:${port}/params`);
 
         cy.get('#userCopy > :nth-child(2) > tbody > :nth-child(1) > :nth-child(1)')
             .invoke('text', parameterData)
@@ -301,29 +306,29 @@ Z_USERS`
         const paramTableArray = [];
         const paramTableSelector = '#userCopy table:nth-child(2) tbody tr';
 
-        cy.get(paramTableSelector).each(($row)=>{
+        cy.get(paramTableSelector).each(($row) => {
             const rowData = [];
 
-            cy.wrap($row).find('td').each(($cell) =>{
+            cy.wrap($row).find('td').each(($cell) => {
                 rowData.push($cell.text());
             });
 
             paramTableArray.push(rowData);
-        }).then(()=>{
+        }).then(() => {
             expect(parameterDataArray).to.deep.equal(paramTableArray);
         });
     });
 
-    it("Additional entries must be created to fully accommodate the data pasted into the model user's 'Perfis' table.", ()=>{
+    it("Additional entries must be created to fully accommodate the data pasted into the model user's 'Perfis' table.", () => {
         const roleDataArray = roleData.trim().split('\n');
 
-        cy.visit('http://localhost:3333/params');
+        cy.visit(`http://localhost:${port}/params`);
 
         cy.get('#userCopy > :nth-child(3) > tbody > :nth-child(1) > td')
             .invoke('text', roleData)
             .trigger('paste', { clipboardData: { getData: () => roleData } });
 
-        for(let i = 0; i < roleDataArray.length; i++){
+        for (let i = 0; i < roleDataArray.length; i++) {
             const selector = `#userCopy > :nth-child(3) > tbody > :nth-child(${i + 1}) > td`;
             cy.get(selector).should('have.text', roleDataArray[i]);
         }

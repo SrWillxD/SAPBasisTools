@@ -2,8 +2,12 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const routes = require('./app/Routes/router.js');
+const dotenv = require('dotenv')
 
-const port = 3333;
+dotenv.config();
+
+const port = process.env.PORT || 3333;
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname + '/app/Public'));
